@@ -40,4 +40,11 @@ set(MINIAPPS_COMMON_SOURCES ${MINIAPPS_COMMON_SOURCES} ${SRCS} PARENT_SCOPE)
 set(MINIAPPS_COMMON_HEADERS ${MINIAPPS_COMMON_HEADERS} ${HDRS} PARENT_SCOPE)
 
 mfem_add_library(mfem-common ${SRCS} ${HDRS})
-target_link_libraries(mfem-common mfem)
+
+if(CMAKE_VERSION VERSION_GREATER 2.8.11)
+   target_link_libraries(mfem-common PRIVATE mfem)
+else()
+   target_link_libraries(mfem-common mfem)
+endif()
+
+

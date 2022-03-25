@@ -392,6 +392,11 @@ if (MFEM_USE_CALIPER)
   find_package(Caliper REQUIRED)
 endif()
 
+# VNV 
+if (MFEM_USE_VNV)
+  find_package(Injection REQUIRED)
+endif()
+
 # AMD HIP
 if (MFEM_USE_HIP)
   find_package(HIP REQUIRED)
@@ -471,6 +476,7 @@ if (OPENMP_FOUND)
   endif()
 endif()
 
+
 message(STATUS "MFEM build type: CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 message(STATUS "MFEM version: v${MFEM_VERSION_STRING}")
 message(STATUS "MFEM git string: ${MFEM_GIT_STRING}")
@@ -517,6 +523,7 @@ if (MINGW)
 endif()
 set_target_properties(mfem PROPERTIES VERSION "${mfem_VERSION}")
 set_target_properties(mfem PROPERTIES SOVERSION "${mfem_VERSION}")
+
 
 # If building out-of-source, define MFEM_CONFIG_FILE to point to the config file
 # inside the build directory.
