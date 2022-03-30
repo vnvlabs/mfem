@@ -1,61 +1,24 @@
-# Copyright (c) 2010-2021, Lawrence Livermore National Security, LLC. Produced
-# at the Lawrence Livermore National Laboratory. All Rights reserved. See files
-# LICENSE and NOTICE for details. LLNL-CODE-806117.
-#
-# This file is part of the MFEM library. For more information and source code
-# availability visit https://mfem.org.
-#
-# MFEM is free software; you can redistribute it and/or modify it under the
-# terms of the BSD-3 license. We welcome feedback and contributions, see file
-# CONTRIBUTING.md for details.
+variables:
+  BASE_CIMAGE: ${CI_REGISTRY}/rnet/vnv-all/master/vnv_petsc
 
-# General GitLab pipelines configurations for supercomputers and Linux clusters
-# at Lawrence Livermore National Laboratory (LLNL). This entire pipeline is
-# LLNL-specific!
+before_script:
+    - curl https://code.ornl.gov/rse-deployment/rse-sharables/raw/master/rse-bash-modules.sh -O
+    - source rse-bash-modules.sh
+    - func_rse_docker_cleanup
 
+after_script:
+    - source rse-bash-modules.sh
+    - func_rse_docker_cleanup
 
-# The pipeline is divided into stages. Usually, jobs in a given stage wait for
-# the preceding stages to complete before to start. However, we sometimes use
-# the "needs" keyword and express the DAG of jobs for more efficiency.
-# - We use setup and setup_baseline phases to download content outside of mfem
-#   directory.
-# - Allocate/Release is where quartz resource are allocated/released once for all.
-# - Build and Test is where we build and MFEM for multiple toolchains.
-# - Baseline_checks gathers baseline-type test suites execution
-# - Baseline_publish, only available on master, allows to update baseline
-#   results
 stages:
-  - sub-pipelines
+  - build
 
-# Trigger subpipelines:
-quartz-build-and-test:
-  stage: sub-pipelines
-  variables:
-    _AUTOTEST: $AUTOTEST
-  trigger:
-    include: .gitlab/quartz-build-and-test.yml
-    strategy: depend
+build_code:
+  stage: build
+  tags: 
+    - rse-multi-builder
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -f docker/Dockerfile -t ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_BRANCH} --build-arg COMMIT_HASH=${CI_COMMIT_SHA}  --build-arg FROM_IMAGE=${BASE_CIMAGE} .
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_BRANCH}
 
-quartz-baseline:
-  stage: sub-pipelines
-  variables:
-    _AUTOTEST: $AUTOTEST
-  trigger:
-    include: .gitlab/quartz-baseline.yml
-    strategy: depend
-
-lassen-build-and-test:
-  stage: sub-pipelines
-  variables:
-    _AUTOTEST: $AUTOTEST
-  trigger:
-    include: .gitlab/lassen-build-and-test.yml
-    strategy: depend
-
-corona-build-and-test:
-  stage: sub-pipelines
-  variables:
-    _AUTOTEST: $AUTOTEST
-  trigger:
-    include: .gitlab/corona-build-and-test.yml
-    strategy: depend
