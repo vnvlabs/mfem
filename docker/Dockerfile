@@ -22,11 +22,12 @@ RUN cd ${SOURCE_DIR}/mfem \
              -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\
              -DBUILD_SHARED_LIBS=ON\
              -DCMAKE_INSTALL_PREFIX=${MFEM_DIR} .. \
-    && make \
-    && make install
-
+    && make -j 8 \
+    && make install \
+    && make examples
 
 ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/docker_build/vnv.__registration__
+ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/docker/config/vnv.__registration__
 
 
 
