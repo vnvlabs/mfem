@@ -1,8 +1,8 @@
 {
     "logo" : {
-        "small" : "mfem/static/logo.jpeg",
+        "small" : "mfem/static/logo.png",
         "icon" : "mfem/static/favicon.ico",
-        "large" : "mfem/static/intro.jpeg"
+        "large" : "mfem/static/intro.png"
     },
     "copyright" : {
         "message" : "RNET Technolgies Inc.",
