@@ -62,4 +62,5 @@ def segment():
     content = request.args.get("content")
     return render_template(content)
    except:
+       print("Could not find content:", TEMPLATE_NAME, request.args.get("content"),".")
        return render_template("includes/page-not-found.html")
