@@ -1,5 +1,5 @@
 ARG FROM_IMAGE=vnv_petsc
-FROM ${FROM_IMAGE}:latest
+FROM ${FROM_IMAGE}
 
 ARG COMMIT_HASH=unknown
 LABEL vnv.version.mfem=${COMMIT_HASH}
