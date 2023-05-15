@@ -10,8 +10,8 @@ COPY . ${SOURCE_DIR}/mfem
 
 #Install MOOSE with VnV
 RUN cd ${SOURCE_DIR}/mfem \
-    && mkdir docker_build \
-    && cd docker_build \
+    && mkdir build \
+    && cd build \
     && cmake -DHYPRE_DIR=${HYPRE_DIR}\
              -DMETIS_DIR=${PETSC_DIR}\
              -DPETSC_DIR=${PETSC_DIR}\
@@ -26,7 +26,7 @@ RUN cd ${SOURCE_DIR}/mfem \
     && make install \
     && make examples
 
-ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/docker_build/vnv.__registration__
+ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/build/vnv.__registration__
 ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/docker/config/vnv.__registration__
 
 
