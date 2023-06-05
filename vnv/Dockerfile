@@ -1,8 +1,6 @@
 ARG FROM_IMAGE=vnv_petsc
 FROM ${FROM_IMAGE}
 
-ARG COMMIT_HASH=unknown
-LABEL vnv.version.mfem=${COMMIT_HASH}
 
 ENV MFEM_DIR=${SOFTWARE_DIR}/mfem
 
@@ -24,7 +22,10 @@ RUN cd ${SOURCE_DIR}/mfem \
              -DCMAKE_INSTALL_PREFIX=${MFEM_DIR} .. \
     && make -j 8 \
     && make install \
-    && make examples
+    && cp -r ../vnv/config ${MFEM_DIR}/gui \
+    && cp -r ../vnv/examples ${MFEM_DIR}/examples 
+    
+RUN rm -r ${SOURCE_DIR}/mfem
 
 ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/build/vnv.__registration__
 ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/docker/config/vnv.__registration__

@@ -16,6 +16,17 @@
 #include <fstream>
 #include <iostream>
 
+#include "VnV.h"
+
+/**
+ * @title MFEM Example 01. 
+ * @shortTitle MFEM Ex01
+ * 
+ * Welcome to the machine. 
+ */
+INJECTION_EXECUTABLE(MFEM_EX0)
+INJECTION_SUBPACKAGE(MFEM_EX0,mfem)
+
 
 using namespace std;
 using namespace mfem;
@@ -30,6 +41,8 @@ int main(int argc, char *argv[])
    args.AddOption(&mesh_file, "-m", "--mesh", "Mesh file to use.");
    args.AddOption(&order, "-o", "--order", "Finite element polynomial degree");
    args.ParseCheck();
+
+   INJECTION_INITIALIZE(MFEM_EX0,&argc, &argv, "vnv.json");
 
    // 2. Read the mesh from the given mesh file, and refine once uniformly.
    Mesh mesh(mesh_file);
@@ -77,6 +90,8 @@ int main(int argc, char *argv[])
    a.RecoverFEMSolution(X, b, x);
    x.Save("sol.gf");
    mesh.Save("mesh.mesh");
+
+   INJECTION_FINALIZE(MFEM_EX0);
 
    return 0;
 }
