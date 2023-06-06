@@ -25,11 +25,14 @@ RUN cd ${SOURCE_DIR}/mfem \
 
 #Build the examples 
 RUN cd ${SOURCE_DIR}/mfem && cp -r vnv/examples ${MFEM_DIR}/examples cd ${MFEM_DIR}/examples && mkdir build && cd build && cmake .. && make  
-RUN rm -r ${SOURCE_DIR}/mfem 
 
 #Set up the vnv mfem customizations. 
-RUN cp -r ../vnv/gui ${MFEM_DIR}/gui 
-RUN echo ${SOFTWARE_DIR}/mfem/gui/vnv.__registration__ >> ${HOME}/.vnv
+RUN cp -r ${SOURCE_DIR}/mfem/vnv/gui ${MFEM_DIR}/gui 
+RUN python3 ${VNV_DIR}/scripts/register.py register ${SOFTWARE_DIR}/mfem/gui/vnv.__registration__ 
+
+RUN rm -r ${SOURCE_DIR}/mfem 
+
+
 
 
 
