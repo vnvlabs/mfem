@@ -21,14 +21,15 @@ RUN cd ${SOURCE_DIR}/mfem \
              -DBUILD_SHARED_LIBS=ON\
              -DCMAKE_INSTALL_PREFIX=${MFEM_DIR} .. \
     && make -j 8 \
-    && make install \
-    && cp -r ../vnv/config ${MFEM_DIR}/gui \
-    && cp -r ../vnv/examples ${MFEM_DIR}/examples 
-    
-RUN rm -r ${SOURCE_DIR}/mfem
+    && make install 
 
-ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/build/vnv.__registration__
-ENV VNV_CONFIG=${VNV_CONFIG}:${SOURCE_DIR}/mfem/docker/config/vnv.__registration__
+#Build the examples 
+RUN cd ${SOURCE_DIR}/mfem && cp -r vnv/examples ${MFEM_DIR}/examples cd ${MFEM_DIR}/examples && mkdir build && cd build && cmake .. && make  
+RUN rm -r ${SOURCE_DIR}/mfem 
+
+#Set up the vnv mfem customizations. 
+RUN cp -r ../vnv/gui ${MFEM_DIR}/gui 
+RUN echo ${SOFTWARE_DIR}/mfem/gui/vnv.__registration__ >> ${HOME}/.vnv
 
 
 
