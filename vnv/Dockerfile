@@ -28,7 +28,7 @@ RUN cd ${SOURCE_DIR}/mfem && cp -r vnv/examples ${MFEM_DIR}/examples && cd ${MFE
 
 #Set up the vnv mfem customizations. 
 RUN cp -r ${SOURCE_DIR}/mfem/vnv/gui ${MFEM_DIR}/gui 
-ENV VNV_CONFIG=${VNV_CONFIG}:${SOFTWARE_DIR}/mfem/gui/vnv.__registration__ 
+RUN ${VNV_REGISTER} gui mfem ${SOFTWARE_DIR}/mfem/gui/vnv.__registration__ 
 
 RUN rm -r ${SOURCE_DIR}/mfem 
 
