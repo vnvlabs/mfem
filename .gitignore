@@ -6,7 +6,6 @@
 # Also ignore OS-specific files like .DS_Store on Mac
 # ------------------------------------------------------------------------------
 build
-
 # Object and library files
 *.o
 /libmfem.*
