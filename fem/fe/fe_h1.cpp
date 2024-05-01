@@ -37,8 +37,7 @@ H1_SegmentElement::H1_SegmentElement(const int p, const int btype)
    }
 }
 
-void H1_SegmentElement::CalcShape(const IntegrationPoint &ip,
-                                  Vector &shape) const
+void H1_SegmentElement::CalcShape(const IntegrationPoint &ip, Vector &shape) const
 {
    const int p = order;
 
@@ -184,7 +183,8 @@ void H1_QuadrilateralElement::CalcDShape(const IntegrationPoint &ip,
       for (int i = 0; i <= p; i++)
       {
          dshape(dof_map[o],0) = dshape_x(i)* shape_y(j);
-         dshape(dof_map[o],1) =  shape_x(i)*dshape_y(j);  o++;
+         dshape(dof_map[o],1) =  shape_x(i)*dshape_y(j); 
+         o++;
       }
    }
 }

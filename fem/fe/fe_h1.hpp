@@ -47,13 +47,14 @@ private:
 
 public:
    /// Construct the H1_QuadrilateralElement of order @a p and BasisType @a btype
-   H1_QuadrilateralElement(const int p,
-                           const int btype = BasisType::GaussLobatto);
-   virtual void CalcShape(const IntegrationPoint &ip, Vector &shape) const;
-   virtual void CalcDShape(const IntegrationPoint &ip,
-                           DenseMatrix &dshape) const;
-   virtual void CalcHessian(const IntegrationPoint &ip,
-                            DenseMatrix &Hessian) const;
+   H1_QuadrilateralElement(const int p, const int btype = BasisType::GaussLobatto);
+  
+   virtual void CalcShape(const IntegrationPoint &ip, Vector &shape) const override;
+   
+   virtual void CalcDShape(const IntegrationPoint &ip, DenseMatrix &dshape) const;
+   
+   virtual void CalcHessian(const IntegrationPoint &ip, DenseMatrix &Hessian) const;
+   
    virtual void ProjectDelta(int vertex, Vector &dofs) const;
 };
 
