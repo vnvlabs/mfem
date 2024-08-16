@@ -25,11 +25,6 @@ RUN cd ${SOURCE_DIR}/mfem \
 
 #Build the examples 
 RUN cd ${SOURCE_DIR}/mfem && cp -r vnv/examples ${MFEM_DIR}/examples && cd ${MFEM_DIR}/examples && mkdir build && cd build    
-
-#Set up the vnv mfem customizations. 
-RUN cp -r ${SOURCE_DIR}/mfem/vnv/gui ${MFEM_DIR}/gui 
-RUN ${VNV_REGISTER} gui mfem ${SOFTWARE_DIR}/mfem/gui/vnv.__registration__ 
-
 RUN rm -r ${SOURCE_DIR}/mfem 
 
 

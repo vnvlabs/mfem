@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
    args.AddOption(&order, "-o", "--order", "Finite element polynomial degree");
    args.ParseCheck();
 
-   INJECTION_INITIALIZE(MFEM_EX0,&argc, &argv, "vnv.json");
+   INJECTION_INITIALIZE(MFEM_EX0,&argc, &argv);
 
    // 2. Read the mesh from the given mesh file, and refine once uniformly.
    Mesh mesh(mesh_file);

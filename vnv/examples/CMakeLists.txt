@@ -7,5 +7,5 @@ find_package(MFEM REQUIRED)
 find_package(Injection REQUIRED)
 add_executable(ex0 ex0.cpp)
 target_link_libraries(ex0 PUBLIC MFEM::MFEM)
-link_vnv_file(ex0 MFEM_EX0 cpp)
+link_vnv_executable(ex0 MFEM_EX0 cpp)
 
